@@ -14,17 +14,19 @@ var app = new Vue({
   },
 
   mounted: function () {
+    var that = this;
+
     $.ajax({
       url: 'senate_generation_percentages_per_day.json',
       success: function (data) {
-        this.generateChart(JSON.parse(data), '#senate-chart', 'Senators');
+        that.generateChart(data, '#senate-chart', 'Senators');
       },
     });
 
     $.ajax({
       url: 'representative_generation_percentages_per_day.json',
       success: function (data) {
-        this.generateChart(JSON.parse(data), '#representatives-chart', 'Representatives');
+        that.generateChart(data, '#representatives-chart', 'Representatives');
       },
     });
   },
