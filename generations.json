@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Before 1883",
+    "startYear": 1,
+    "endYear": 1882
+  },
+  {
+    "name": "Lost Generation",
+    "startYear": 1883,
+    "endYear": 1900
+  },
+  {
+    "name": "Greatest Generation",
+    "startYear": 1901,
+    "endYear": 1927
+  },
+  {
+    "name": "Silent Generation",
+    "startYear": 1928,
+    "endYear": 1945
+  },
+  {
+    "name": "Baby Boomers",
+    "startYear": 1946,
+    "endYear": 1964
+  },
+  {
+    "name": "Generation X",
+    "startYear": 1965,
+    "endYear": 1980
+  },
+  {
+    "name": "Millennials",
+    "startYear": 1981,
+    "endYear": 1996
+  },
+  {
+    "name": "Generation Z",
+    "startYear": 1997,
+    "endYear": 2012
+  }
+]
