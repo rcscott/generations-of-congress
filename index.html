@@ -16,17 +16,71 @@
   </head>
   <body>
     <div id="app" class="container">
-      <h1>Generations of Congress</h1>
-      <p>Description of what this is</p>
-
       <div class="row">
         <div class="col-sm-12">
+          <h1>Generations of Congress</h1>
+
+          <p>
+            This project was inspired by a Politico article titled
+            <a href="https://www.politico.com/news/2019/10/26/how-the-baby-boomers-broke-america-058122" target="_blank">How the baby boomers broke America</a>,
+            which suggested that the Baby Boomer generation has had a stronghold on American politics for the past three decades. In the article,
+            Ben White points to the streak of Baby Boomer presidents and the current list of Boomers who are leading in the polls for the Democratic
+            candidacy (Biden, Warren, Sanders) as evidence of this. He then goes on to cherry-pick a collection of other Baby Boomers who have had an
+            impact during this time period, such as John Boehner and Newt Gingrich. Newt Gingrich is arguably from the Silent Generation (born in 1943),
+            but that's a fuzzy point since I learned during this research that not everyone agrees on the date range of each generation.
+          </p>
+
+          <p>
+            While I can't argue with the observation that the recent string of Presidents have all been Baby Boomers, I was left wondering how much of Congress is
+            currently made up by that generation and how that's changed over time. What I found was largely what you might guess - a gradual series of waves as each
+            generation comes of age and replaces the previous generations' seats. Another pretty obvious finding was that each generation starts it's congressional
+            wave in the House of Representatives before starting to move into the Senate. This effect is amplified with Generation X, which leaves me wondering if
+            the minimum age that our electorate considers old enough for Congress has gradually lowered. Elise Stefanik and Alexandria Ocasio-Cortez of course come to
+            mind as younger Representatives, but from skimming
+            <a href="https://en.wikipedia.org/wiki/List_of_youngest_members_of_the_United_States_Congress" target="_blank">Wikipedia</a>
+            I'm not sure that they are outliers (more research for another day).
+          </p>
+
+          <p>
+            Coming back around to the article, I was left feeling like the author exagerated a bit by saying that Boomers have had a "three-decade run dominating
+            American political life". His points fit nicely around the linked podcast episode but I don't think they entirely hold up when looking at the data.
+            Three decades ago was 1990, which is also the year that the Silent Generation reached it's peak at 62% in the House of Representatives. The Baby Boomers'
+            share of the House was growing at that point but didn't become the majority generation in the House until 1999. Since then they have maintained more than
+            50% of the House, and now their numbers are starting to level off. In the Senate their impact was even more delayed - the Silent Generation held power
+            there for almost 30 years until the Boomers gained the majority in late 2007. All of this is not to say that Baby Boomers had no impact in Congress during
+            the 90's as their ranks were certainly growing during this time period, but I think it's more appropriate to factor in the impact of the Greatest
+            Generation, the Silent Generation, <i>and</i> the Baby Boomers when considering the policies of the past 30 years.
+
+          <p>
+            White's article was thought provoking and made some decent points, but I'm not sure that it's realistic to imagine any generation with a stronghold
+            over Congress during any given slice of time. Each generation is impacted by the one before it and impacts the one after it. Congress is always a mix
+            of newcomers, career politicians, and those who are on their way out the door. Generations are not consistent blocks but instead are somewhat arbitrary
+            in their ranges (18 years for the Boomers vs. 15 for Millenials). I think it will be interesting to watch these graphs evolve over time, but in the end
+            I don't think that comparing the history of policy based solely on this data point is a particularly helpful lense.
+          </p>
+
           <div class="card">
             <div class="card-body">
-              <canvas id="senate-chart"></canvas>
               <canvas id="representatives-chart"></canvas>
+              <canvas id="senate-chart"></canvas>
             </div>
           </div>
+
+          <p>
+            A note on the charts: Generational labels don't really exist before the Lost Generation started in 1883, so I've left all previous Congress member
+            off the charts. This makes it look like Congress didn't exist until the early 1900's, but that's obviously not the case.
+          </p>
+
+          <p>
+            The data for each Congress member's date of birth came from the amazing
+            <a href="https://theunitedstates.io/" target="_blank">@unitedstates project</a>.
+            This project would have been monumentally more difficult without that data.
+          </p>
+
+          <p>
+            The code for this project lives at
+            <a href="https://github.com/rcscott/generations-of-congress" target="_blank">https://github.com/rcscott/generations-of-congress</a>
+          </p>
         </div>
       </div>
     </div>
