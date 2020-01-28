@@ -4,6 +4,21 @@ require 'json'
 require 'rails'
 require 'byebug'
 
+def get_generations_by_year
+  generations = JSON.parse(File.read('data/generations.json'))
+
+  generations.map do |gen|
+    (gen['startYear']..gen['endYear']).map do |year|
+      [year, gen['name']]
+    end
+  end.flatten(1).to_h
+end
+
+def get_congress_session_dates
+  session_dates = JSON.parse(File.read('data/congressional_session_start_dates.json'))
+  session_dates.map { |d| Date.parse(d) }
+end
+
 def get_active_legislators_by_day
   puts 'Downloading current legislator data'
   legislators = JSON.parse(HTTParty.get('https://theunitedstates.io/congress-legislators/legislators-current.json').body)
@@ -32,16 +47,6 @@ def get_active_legislators_by_day
   }
 end
 
-def get_generations_by_year
-  generations = JSON.parse(File.read('generations.json'))
-
-  generations.map do |gen|
-    (gen['startYear']..gen['endYear']).map do |year|
-      [year, gen['name']]
-    end
-  end.flatten(1).to_h
-end
-
 def counts_to_percentages(generation_counts)
   # Calculate the rounded percentage of each generation, and ensure that the total adds up to 100%
   # Taken from https://revs.runtime-revolution.com/getting-100-with-rounded-percentages-273ffa70252b
@@ -60,15 +65,11 @@ def counts_to_percentages(generation_counts)
   end.to_h
 end
 
-def generations_of_congress_per_day(generations_by_year, legislators_by_day)
-  start_date = Date.new(1910, 1, 1)
-  end_date = Date.new(2018, 12, 31)
-  previous_day_counts = Hash.new
-
+def generations_of_congress_per_day(generations_by_year, congress_session_dates, legislators_by_day)
   # Return data structure: {"Generation Name": {"1900-01-01": 5}}
   generation_percentages_per_day = Hash.new { |h, k| h[k] = Hash.new }
 
-  (start_date..end_date).each do |day|
+  congress_session_dates.each do |day|
     current_day_counts = generations_by_year.values.map { |generation| [generation, 0] }.to_h
 
     legislators_by_day[day].each do |legislator|
@@ -83,10 +84,6 @@ def generations_of_congress_per_day(generations_by_year, legislators_by_day)
     # Ignore day if there is only 1 member total, or if all values are 0
     next if current_day_counts.values.sum <= 1
 
-    # Ignore day if unchanged from previous unique day
-    next if current_day_counts == previous_day_counts
-
-    previous_day_counts = current_day_counts
     current_day_percentages = counts_to_percentages(current_day_counts)
     puts "#{day}:\n\tCounts: #{current_day_counts}\n\tPercentages: #{current_day_percentages}"
 
@@ -100,14 +97,21 @@ end
 
 
 generations_by_year = get_generations_by_year
+congress_session_dates = get_congress_session_dates
 active_legislators_by_day = get_active_legislators_by_day
 
 puts "*** Generating Senate data ***"
 senate_percentages_per_day = generations_of_congress_per_day(
-  generations_by_year, active_legislators_by_day[:active_senators_by_day])
+  generations_by_year,
+  congress_session_dates,
+  active_legislators_by_day[:active_senators_by_day],
+)
 File.write("senate_generation_percentages_per_day.json", JSON.generate(senate_percentages_per_day))
 
 puts "*** Generating House of Representatives data ***"
 representative_percentages_per_day = generations_of_congress_per_day(
-  generations_by_year, active_legislators_by_day[:active_representatives_by_day])
+  generations_by_year,
+  congress_session_dates,
+  active_legislators_by_day[:active_representatives_by_day],
+)
 File.write("representative_generation_percentages_per_day.json", JSON.generate(representative_percentages_per_day))
